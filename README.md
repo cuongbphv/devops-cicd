@@ -1,1 +1,15 @@
-# devops-cicd
+# Summary all practices with example in real project:
+- Docker
+- Kubernetes
+- ArgoCD
+- Jenkins
+- Terraform
+- Sonarqube
+- Ansible
+- AWS
+- GCP
+- SAST
+- Git Actions
+- KEDA
+- Service Mesh Istio
+- Rancher
