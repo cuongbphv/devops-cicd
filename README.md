@@ -1,4 +1,4 @@
-# Summary all practices:
+# Summary all practices with example in real project:
 - Docker
 - Kubernetes
 - ArgoCD
