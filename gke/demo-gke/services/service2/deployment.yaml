@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: service2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service2-deployment
+  template:
+    metadata:
+      labels:
+        app: service2-deployment
+    spec:
+      containers:
+      - name: service2-service
+        image: asia-southeast1-docker.pkg.dev/your-example-prj/example/service2:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+        # resources:
+        # requests:
+        #   cpu: "128m"
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: timeZone
+        - name: spring.datasource.hikari.maximum-pool-size
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: spring.datasource.hikari.maximum-pool-size
+        - name: spring.datasource.url
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: spring.datasource.url
+        - name: spring.datasource.username
+          valueFrom:
+            secretKeyRef:
+              name: example-secret
+              key: DB_USERNAME
+        - name: spring.datasource.password
+          valueFrom:
+            secretKeyRef:
+              name: example-secret
+              key: DB_PASSWORD
+        - name: mybatis.configuration.log-impl
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: mybatis.configuration.log-impl
+        - name: spring.servlet.multipart.max-request-size
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: spring.servlet.multipart.max-request-size
+        - name: spring.servlet.multipart.max-file-size
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: spring.servlet.multipart.max-file-size
+        - name: size.list.data
+          valueFrom:
+            configMapKeyRef:
+              name: example-config-maps
+              key: size.list.data

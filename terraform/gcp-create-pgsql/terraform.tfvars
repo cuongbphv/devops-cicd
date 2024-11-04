@@ -1,0 +1,5 @@
+gcp_project               = "your-gcp-example-prj"
+gcp_region1               = "asia-southeast1"
+environment               = "dev"
+business_division         = "it"
+cloudsql_database_version = "POSTGRES_15"

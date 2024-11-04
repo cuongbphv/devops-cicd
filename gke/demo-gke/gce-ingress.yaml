@@ -1,0 +1,52 @@
+# apiVersion: networking.gke.io/v1
+# kind: ManagedCertificate
+# metadata:
+#   namespace: example
+#   name: example-cert
+# spec:
+#   domains:
+#   - gke.example.com
+# ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: example
+  name: ingress-example-staging
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: example-public-ip # Reserve IP Public on GCP
+    ingress.gcp.kubernetes.io/pre-shared-cert: "example-certs" # Add your certs from provider
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - host: gke.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: feapp-svc
+            port:
+              name: feapp
+      - path: /assets
+        pathType: Prefix
+        backend:
+          service:
+            name: feapp-svc
+            port:
+              name: feapp
+      - path: /api/service2
+        pathType: Prefix
+        backend:
+          service:
+            name: service2-svc
+            port:
+              name: service2
+      - path: /api/service1
+        pathType: Prefix
+        backend:
+          service:
+            name: service1-svc
+            port:
+              name: service1

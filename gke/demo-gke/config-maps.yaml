@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: example
+  name: example-config-maps
+data:
+  timeZone: Asia/Ho_Chi_Minh
+  spring.datasource.url: jdbc:postgresql://IP:5432/DB?stringtype=unspecified
+  spring.datasource.hikari.maximum-pool-size: '20'
+  mybatis.configuration.log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  spring.servlet.multipart.max-request-size: 50MB
+  spring.servlet.multipart.max-file-size: 50MB

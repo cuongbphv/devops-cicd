@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: feapp-svc
+  annotations:
+    cloud.google.com/backend-config: '{"ports": { "feapp":"feapp-health" }}'
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: feapp
+  type: ClusterIP
+  selector:
+    app: feapp-deployment
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: feapp-health
+  namespace: example
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    timeoutSec: 5
+    healthyThreshold: 1
+    unhealthyThreshold: 2
+    type: HTTP
+    requestPath: /
+    port: 80

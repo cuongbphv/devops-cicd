@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: feapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feapp-deployment
+  template:
+    metadata:
+      labels:
+        app: feapp-deployment
+    spec:
+      containers:
+      - name: feapp
+        image: asia-southeast1-docker.pkg.dev/your-example-prj/example/feapp:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
