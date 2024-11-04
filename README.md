@@ -1,1 +1,15 @@
-# devops-cicd
+# Summary all practices:
+- Docker
+- Kubernetes
+- ArgoCD
+- Jenkins
+- Terraform
+- Sonarqube
+- Ansible
+- AWS
+- GCP
+- SAST
+- Git Actions
+- KEDA
+- Service Mesh Istio
+- Rancher
