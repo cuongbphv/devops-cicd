@@ -2,8 +2,6 @@
 - name: Setup kubernetes common
   hosts: kcontrol, knodes
   become: true
-  become_method: sudo
-  become_user: ansible
   gather_facts: true
   roles:
     - kube-common-setup
@@ -11,8 +9,6 @@
 - name: Setup kubernetes control plane
   hosts: kcontrol
   become: true
-  become_method: sudo
-  become_user: ansible
   gather_facts: true
   roles:
     - kube-control-setup
@@ -20,8 +16,6 @@
 - name: Setup kubernetes node
   hosts: knodes
   become: true
-  become_method: sudo
-  become_user: ansible
   gather_facts: true
   roles:
     - kube-node-setup
@@ -29,8 +23,6 @@
 - name: Setup kubernetes node
   hosts: kcontrol
   become: true
-  become_method: sudo
-  become_user: ansible
   gather_facts: true
   roles:
     - post-installation
