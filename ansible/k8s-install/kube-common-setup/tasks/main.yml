@@ -1,4 +1,13 @@
 ---
+- name: Check Linux Distribution
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Print Linux Distribution
+      debug:
+        msg: "The Linux distribution is {{ ansible_distribution }}"
+
+
 - name: disable SELinux on reboot
   selinux:
     state: disabled
