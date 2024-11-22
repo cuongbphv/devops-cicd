@@ -48,7 +48,7 @@
       - nfs-utils
     state: present
     update_cache: true
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'OracleLinux'
 
 - name: Install Longhorn support package in Ubuntu
   apt:
