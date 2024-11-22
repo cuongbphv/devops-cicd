@@ -75,8 +75,14 @@
     update_cache: true
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
+- name: Check if containerd config.toml exists
+  stat:
+    path: /etc/containerd/config.toml
+  register: containerd_config
+
 - name: Backup containerd config.toml
   command: mv /etc/containerd/config.toml /etc/containerd/config.toml.orig
+  when: containerd_config.stat.exists
 
 - name: Generate default containerd config.toml
   shell: containerd config default > /etc/containerd/config.toml
