@@ -6,7 +6,6 @@
     dest: /tmp/metallb-native.yaml
 
 - name: Apply MetalLB YAML
-  become_user: "{{ user }}"
   shell: |
     kubectl apply -f metallb-native.yaml
     kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
@@ -14,7 +13,6 @@
     chdir: /tmp/
 
 - name: Pause for MetalLB pods to ready
-  become_user: "{{ user }}"
   shell: kubectl wait pod --all --for=condition=Ready --namespace=metallb-system --timeout=300s
 
 - name: Copy MetalLB IP pool config
@@ -23,7 +21,6 @@
     dest: /tmp/metallb-ip.yaml
 
 - name: Apply MetalLB IP pool
-  become_user: "{{ user }}"
   shell: kubectl apply -f /tmp/metallb-ip.yaml
   args:
     chdir: /tmp/
@@ -35,7 +32,6 @@
     dest: /tmp/ingress_nginx.yaml
 
 - name: Apply Ingress YAML
-  become_user: "{{ user }}"
   shell: kubectl apply -f ingress_nginx.yaml
   args:
     chdir: /tmp/
@@ -71,17 +67,14 @@
     dest: /tmp/get-helm-3.sh
 
 - name: Install Helm
-  become_user: "{{ user }}"
   shell: bash get-helm-3.sh
   args:
     chdir: /tmp/
 
 - name: Add Longhorn repo
-  become_user: "{{ user }}"
   shell: |
     helm repo add longhorn https://charts.longhorn.io
     helm repo update
 
 - name: Install longhorn using Helm
-  become_user: "{{ user }}"
   shell: helm upgrade --install longhorn longhorn/longhorn --create-namespace --namespace longhorn-system
