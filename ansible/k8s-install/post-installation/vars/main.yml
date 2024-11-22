@@ -2,7 +2,7 @@
 user: ansible
 
 metallb:
-  addresses: 192.168.72.150/32
+  addresses: 192.168.100.50/32
   version: "v0.14.8"
 
 ingress_nginx:
