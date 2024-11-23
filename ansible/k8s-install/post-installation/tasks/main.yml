@@ -1,31 +1,31 @@
 ---
-# - name: Download MetalLB manifests
-#   get_url:
-#     url: https://raw.githubusercontent.com/metallb/metallb/{{ metallb.version }}/config/manifests/metallb-native.yaml
-#     dest: /tmp/metallb-native.yaml
+- name: Download MetalLB manifests
+  get_url:
+    url: https://raw.githubusercontent.com/metallb/metallb/{{ metallb.version }}/config/manifests/metallb-native.yaml
+    dest: /tmp/metallb-native.yaml
 
-# - name: Apply MetalLB YAML
-#   become_user: "{{ user }}"
-#   shell: |
-#     kubectl apply -f metallb-native.yaml
-#     kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-#   args:
-#     chdir: /tmp/
+- name: Apply MetalLB YAML
+  become_user: "{{ user }}"
+  shell: |
+    kubectl apply -f metallb-native.yaml
+    kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+  args:
+    chdir: /tmp/
 
-# - name: Pause for MetalLB pods to ready
-#   become_user: "{{ user }}"
-#   shell: kubectl wait pod --all --for=condition=Ready --namespace=metallb-system --timeout=300s
+- name: Pause for MetalLB pods to ready
+  become_user: "{{ user }}"
+  shell: kubectl wait pod --all --for=condition=Ready --namespace=metallb-system --timeout=300s
 
-# - name: Copy MetalLB IP pool config
-#   template:
-#     src: files/metallb-ip.yaml.j2
-#     dest: /tmp/metallb-ip.yaml
+- name: Copy MetalLB IP pool config
+  template:
+    src: files/metallb-ip.yaml.j2
+    dest: /tmp/metallb-ip.yaml
 
-# - name: Apply MetalLB IP pool
-#   become_user: "{{ user }}"
-#   shell: kubectl apply -f /tmp/metallb-ip.yaml
-#   args:
-#     chdir: /tmp/
+- name: Apply MetalLB IP pool
+  become_user: "{{ user }}"
+  shell: kubectl apply -f /tmp/metallb-ip.yaml
+  args:
+    chdir: /tmp/
 
 - name: "Apply Nginx controller manifests"
   get_url:
