@@ -10,7 +10,6 @@
 
 - name: Initialize kubernetes cluster
   shell: kubeadm init --apiserver-advertise-address={{ kubernetes.control_ip }} --pod-network-cidr={{ calico.cidr }} --cri-socket=unix:///run/containerd/containerd.sock
-  # kubeadm init --pod-network-cidr=192.168.128.0/17
   register: output
 
 - name: Save output file from master
@@ -54,11 +53,20 @@
 - name: Download Calico YAML
   get_url:
     url: https://raw.githubusercontent.com/projectcalico/calico/{{ calico.version }}/manifests/calico.yaml
-    # https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml
+    dest: /tmp/calico.yaml
+
+- name: Download Custom Resources YAML
+  get_url:
+    url: https://raw.githubusercontent.com/projectcalico/calico/{{ calico.version }}/manifests/custom-resources.yaml
     dest: /tmp/calico.yaml
 
 - name: Apply Calico YAML
   shell: kubectl apply -f calico.yaml
+  args:
+    chdir: /tmp/
+
+- name: Create the manifest to install Calico
+  shell: kubectl create -f custom-resources.yaml
   args:
     chdir: /tmp/
 
