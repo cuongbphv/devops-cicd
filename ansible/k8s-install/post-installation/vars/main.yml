@@ -7,7 +7,7 @@ metallb:
 
 ingress_nginx:
   version: "v1.11.3"
-  provider: "baremetal"
+  provider: "cloud"
 
 letsencrypt:
-  email: cuongbphv@gmail.com
+  email: abc@gmail.com
